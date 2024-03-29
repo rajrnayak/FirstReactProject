@@ -24,7 +24,7 @@ function ViewStudents({ students, deleteStudentFromChild, editStudentFromChild }
 									type="button"
 									className="btn btn-outline-success"
 									onClick={() => {
-										editStudentFromChild(student.id);
+										editStudentFromChild(student);
 									}}>
 									Edit
 								</button>

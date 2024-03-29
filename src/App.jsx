@@ -21,12 +21,8 @@ function App() {
 		setStudents(students.filter((s) => s.id !== id));
 	}
 
-	function editStudent(id) {
-		students.map((student) => {
-			if (student.id == id) {
-				setStudent(student);
-			}
-		});
+	function editStudent(student) {
+		setStudent(student);
 	}
 
 	function updateStudent(student) {
