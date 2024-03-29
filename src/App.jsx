@@ -1,10 +1,10 @@
 import { useState } from "react";
 import ViewStudents from "./components/ViewStudents.jsx";
 import StoreStudent from "./components/StoreStudent.jsx";
-import UpdateStudent from "./components/UpdateStudent.jsx";
 
 function App() {
 	const [student, setStudent] = useState(null);
+	const [count, setCount] = useState(4);
 	const [students, setStudents] = useState([
 		{ id: 1, first_name: "vinit", last_name: "barot", age: "24" },
 		{ id: 2, first_name: "raj", last_name: "nayak", age: "23" },
@@ -12,7 +12,9 @@ function App() {
 	]);
 
 	function addStudent(student) {
+		student.id = count;
 		setStudents([...students, student]);
+		setCount((c) => c + 1);
 	}
 
 	function deleteStudent(id) {
@@ -43,8 +45,9 @@ function App() {
 	return (
 		<>
 			<div className="container">
-				{student == null ? <StoreStudent addStudentFromChild={addStudent} /> : <UpdateStudent updateStudentFromChild={updateStudent} editStudent={student} />}
+				{student == null && <StoreStudent addStudentFromChild={addStudent} />}
 				{student == null && <ViewStudents students={students} deleteStudentFromChild={deleteStudent} editStudentFromChild={editStudent} />}
+				{student != null && <StoreStudent updateStudentFromChild={updateStudent} editStudent={student} />}
 			</div>
 		</>
 	);

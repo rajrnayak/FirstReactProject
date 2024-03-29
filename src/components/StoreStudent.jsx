@@ -1,14 +1,12 @@
 import { useState } from "react";
-
-function StoreStudent({ addStudentFromChild }) {
-	const [student, setStudent] = useState({ id: null, first_name: "", last_name: "", age: "" });
-	const [count, setCount] = useState(4);
+let ans = false;
+function StoreStudent({ addStudentFromChild = null, updateStudentFromChild = null, editStudent = { id: null, first_name: "", last_name: "", age: "" } }) {
+	const [student, setStudent] = useState(editStudent);
 
 	function saveStudentDetails(e) {
 		setStudent({
 			...student,
 			[e.target.name]: e.target.value,
-			id: count,
 		});
 	}
 
@@ -19,18 +17,27 @@ function StoreStudent({ addStudentFromChild }) {
 			last_name: "",
 			age: "",
 		});
-		setCount((c) => c + 1);
+	}
+
+	function validation() {
+		if (student.first_name != "" && student.last_name != "" && student.age != "") {
+			return true;
+		}
 	}
 
 	function collectData() {
-		addStudentFromChild(student);
-		setstate();
+		ans = validation();
+		if (ans == true) {
+			addStudentFromChild != null ? addStudentFromChild(student) : updateStudentFromChild(student);
+			setstate();
+		}
 	}
+
 	return (
 		<div className="d-flex justify-content-center pt-3">
 			<div className="card col-4">
 				<div className="card-body">
-					<h1 className="text-center">Add Student</h1>
+					<h1 className="text-center">{addStudentFromChild != null ? "Add" : "Edit"} Student</h1>
 					<div className="">
 						<form
 							onSubmit={(event) => {
@@ -58,6 +65,16 @@ function StoreStudent({ addStudentFromChild }) {
 							<button type="submit" className="btn btn-primary">
 								Submit
 							</button>
+							{addStudentFromChild == null && (
+								<button
+									type="submit"
+									className="btn btn-danger ms-2"
+									onClick={() => {
+										return;
+									}}>
+									Cancel
+								</button>
+							)}
 						</form>
 					</div>
 				</div>
